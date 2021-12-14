@@ -36,7 +36,6 @@ public class Amazon {
 		String login_email = readfile.readUserName();
 		String login_password = readfile.readPassword();
 		
-		System.out.println("email: "+login_email+" password: "+login_password);
 		final String expectedLogInMessage = "Hello, KevinAutomation";
 		
 		driver.findElement(By.id("nav-link-accountList-nav-line-1")).click();
@@ -65,6 +64,31 @@ public class Amazon {
 		//System.out.println(driver.getCurrentUrl().contains(searchItem));
 		
 		Assert.assertTrue(driver.getCurrentUrl().contains(searchItem));
+		
+	}
+	
+	
+	@Test
+	public void searchLinkTextItems(){
+		String chairName = "Gaming Chair Racing Office Chair High Back Computer Desk Chair PU Leather Chair Executive and Ergonomic Swivel Chair with Headrest and Lumbar Support (Red)";
+		String searchItem = "chair";
+
+		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
+	
+		driver.findElement(By.id("nav-search-submit-button")).click();
+
+		driver.findElement(By.linkText(chairName)).click();
+		Assert.assertEquals(chairName, driver.findElement(By.id("productTitle")).getText());
+	} 
+	
+	@Test
+	public void serachItemList(){
+		String searchItem = "chair";
+
+		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
+	
+		driver.findElement(By.id("nav-search-submit-button")).click();
+		System.out.print(driver.findElements(By.className("s-result-item")).size());
 		
 	}
 
