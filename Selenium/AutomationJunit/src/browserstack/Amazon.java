@@ -2,10 +2,11 @@ package browserstack;
 
 import org.junit.After;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Assert;
 import org.junit.Before;
-
+import java.util.List;
 
 //import graphql.Assert;
 
@@ -88,7 +89,20 @@ public class Amazon {
 		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
 	
 		driver.findElement(By.id("nav-search-submit-button")).click();
-		System.out.print(driver.findElements(By.className("s-result-item")).size());
+		//System.out.print("ClassName: "+driver.findElements(By.className("s-result-item")).size());
+		//System.out.print("CssSelector: "+driver.findElements(By.cssSelector(".s-result-item .sg-col-4-of-12")).size());
+		
+		//System.out.print("CssSelector: "+driver.findElement(By.cssSelector(".s-result-item .sg-col-4-of-12")).getText());
+		
+		
+		List<WebElement> listElement = driver.findElements(By.cssSelector(".s-result-item .sg-col-4-of-12"));
+		for(int i =0; i<listElement.size();i++){
+
+			String text = listElement.get(i).getText();
+			System.out.println("Text: "+text);
+			
+		}
+		
 		
 	}
 
