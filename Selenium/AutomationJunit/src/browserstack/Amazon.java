@@ -2,6 +2,7 @@ package browserstack;
 
 import org.junit.After;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Assert;
@@ -31,7 +32,7 @@ public class Amazon {
 	}
 	
 	
-	@Test
+/*	@Test
 	public void logIn() throws InterruptedException{
 		ReadFile readfile = new ReadFile(); 
 		String login_email = readfile.readUserName();
@@ -80,29 +81,36 @@ public class Amazon {
 
 		driver.findElement(By.linkText(chairName)).click();
 		Assert.assertEquals(chairName, driver.findElement(By.id("productTitle")).getText());
-	} 
+	} */
 	
 	@Test
 	public void serachItemList(){
 		String searchItem = "chair";
-
 		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
 	
 		driver.findElement(By.id("nav-search-submit-button")).click();
-		//System.out.print("ClassName: "+driver.findElements(By.className("s-result-item")).size());
-		//System.out.print("CssSelector: "+driver.findElements(By.cssSelector(".s-result-item .sg-col-4-of-12")).size());
+		driver.manage().window().maximize();
 		
-		//System.out.print("CssSelector: "+driver.findElement(By.cssSelector(".s-result-item .sg-col-4-of-12")).getText());
-		
-		
-		List<WebElement> listElement = driver.findElements(By.cssSelector(".s-result-item .sg-col-4-of-12"));
+		//Search only contain cel_widget_id*='MAIN-SEARCH_RESULTS' but not cel_widget_id*='MAIN-FEATURED_ASINS_LIST'
+		//Using *= to indicate the attribute contains certain value
+		List<WebElement> listElement = driver.findElements(By.cssSelector(".s-result-item div[cel_widget_id*='MAIN-SEARCH_RESULTS']:not([cel_widget_id*='MAIN-FEATURED_ASINS_LIST'])"));
+		System.out.println(listElement.size());
 		for(int i =0; i<listElement.size();i++){
 
-			String text = listElement.get(i).getText();
-			System.out.println("Text: "+text);
+			String text = listElement.get(i).getText().toLowerCase();
+			//System.out.println("Item"+i+" "+text);
+			if(text.contains(searchItem)){
+				//System.out.println("true"+i+" "+text);
+				continue;
+				
+			} else{
+				//System.out.println("false"+i+" "+text);
+				Assert.assertTrue(false);
+			}
+			//System.out.println("Text: "+text);
 			
 		}
-		
+		Assert.assertTrue(true);
 		
 	}
 
