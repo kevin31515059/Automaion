@@ -52,16 +52,16 @@ public class Amazon {
 
 		Assert.assertEquals(expectedLogInMessage, logInName);
 				
-	}
+	}*/
 	
 	@Test
 	public void searchItems() throws InterruptedException{
 		
 		String searchItem = "chair";
-		
-		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
+		Helper.searchItem(driver, searchItem);
+		//driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
 	
-		driver.findElement(By.id("nav-search-submit-button")).click();
+		//driver.findElement(By.id("nav-search-submit-button")).click();
 		
 		//System.out.println(driver.getCurrentUrl().contains(searchItem));
 		
@@ -70,7 +70,7 @@ public class Amazon {
 	}
 	
 	
-	@Test
+	/*@Test
 	public void searchLinkTextItems(){
 		String chairName = "Gaming Chair Racing Office Chair High Back Computer Desk Chair PU Leather Chair Executive and Ergonomic Swivel Chair with Headrest and Lumbar Support (Red)";
 		String searchItem = "chair";
@@ -83,7 +83,7 @@ public class Amazon {
 		Assert.assertEquals(chairName, driver.findElement(By.id("productTitle")).getText());
 	} */
 	
-	@Test
+/*	@Test
 	public void serachItemList(){
 		String searchItem = "chair";
 		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
@@ -112,7 +112,7 @@ public class Amazon {
 		}
 		Assert.assertTrue(true);
 		
-	}
+	}*/
 
 	
 	@After
