@@ -54,7 +54,7 @@ public class Amazon {
 				
 	}*/
 	
-	@Test
+	/*@Test
 	public void searchItems() throws InterruptedException{
 		
 		String searchItem = "chair";
@@ -67,14 +67,14 @@ public class Amazon {
 		
 		Assert.assertTrue(driver.getCurrentUrl().contains(searchItem));
 		
-	}
+	}*/
 	
 	
 	/*@Test
 	public void searchLinkTextItems(){
 		String chairName = "Gaming Chair Racing Office Chair High Back Computer Desk Chair PU Leather Chair Executive and Ergonomic Swivel Chair with Headrest and Lumbar Support (Red)";
 		String searchItem = "chair";
-
+	
 		driver.findElement(By.id("twotabsearchtextbox")).sendKeys(searchItem);
 	
 		driver.findElement(By.id("nav-search-submit-button")).click();
@@ -115,10 +115,34 @@ public class Amazon {
 	}*/
 
 	
+	@Test
+	public void AddandRemoveItem(){
+		driver.manage().window().maximize();
+		Helper.searchItem(driver, "Chair");
+		Helper.viewListItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Green");
+		Helper.addToCart(driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Helper.closeSlide(driver);
+		//System.out.println("closeSlide");
+		Helper.viewCart(driver);
+		Helper.deleteItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Green");
+		//Helper.deleteItem(driver);
+		System.out.println("Item Removed");
+		//System.out.println(driver.findElement(By.className("a-spacing-mini a-spacing-top-base")).getText());
+		Assert.assertEquals("$0.00", driver.findElement(By.cssSelector(".sc-price")).getText());
+	}
+	
+	
+	
 	@After
 	public void closeDriver(){
 		
-		driver.close();
+		//driver.close();
 		
 	}
 }
