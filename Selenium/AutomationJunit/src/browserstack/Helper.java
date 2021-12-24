@@ -53,5 +53,16 @@ public class Helper {
 		driver.findElement(By.xpath("//span[contains(text(), removeItem)]/../../../../../../..//span[contains(@class,'sc-action-delete')]//input")).click();
 	}
 	
+	public static void wait(int millisecond){
+		
+		try {
+			Thread.sleep(millisecond);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }

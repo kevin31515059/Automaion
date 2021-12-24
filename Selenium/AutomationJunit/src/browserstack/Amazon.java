@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Assert;
 import org.junit.Before;
 import java.util.List;
@@ -119,24 +120,28 @@ public class Amazon {
 	public void AddandRemoveItem(){
 		driver.manage().window().maximize();
 		Helper.searchItem(driver, "Chair");
-		Helper.viewListItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Green");
+		Helper.viewListItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red");
 		Helper.addToCart(driver);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Helper.closeSlide(driver);
+		//Helper.wait(2000);
+		//Helper.closeSlide(driver);
+		Find.ByID(driver, "attach-close_sideSheet-link");
 		//System.out.println("closeSlide");
 		Helper.viewCart(driver);
-		Helper.deleteItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Green");
+		Helper.deleteItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red");
 		//Helper.deleteItem(driver);
-		System.out.println("Item Removed");
-		//System.out.println(driver.findElement(By.className("a-spacing-mini a-spacing-top-base")).getText());
-		Assert.assertEquals("$0.00", driver.findElement(By.cssSelector(".sc-price")).getText());
+		//System.out.println("Item Removed");
+		Helper.wait(2000);
+
+		Assert.assertEquals("Your Amazon cart is empty.", driver.findElement(By.cssSelector(".a-spacing-mini.a-spacing-top-base")).getText());
 	}
 	
+	/*@Test
+	public void viewCart(){
+		
+		Helper.viewCart(driver);
+		System.out.println(driver.findElement(By.className("sc-your-amazon-cart-is-empty")).getText());
+		
+	}*/
 	
 	
 	@After
