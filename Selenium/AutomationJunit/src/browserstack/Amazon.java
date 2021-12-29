@@ -122,17 +122,16 @@ public class Amazon {
 		Helper.searchItem(driver, "Chair");
 		Helper.viewListItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red");
 		Helper.addToCart(driver);
-		//Helper.wait(2000);
-		//Helper.closeSlide(driver);
-		Find.ByID(driver, "attach-close_sideSheet-link");
-		//System.out.println("closeSlide");
+
+		Click.ByID(driver, "attach-close_sideSheet-link");
+
 		Helper.viewCart(driver);
 		Helper.deleteItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red");
-		//Helper.deleteItem(driver);
-		//System.out.println("Item Removed");
-		Helper.wait(2000);
 
-		Assert.assertEquals("Your Amazon cart is empty.", driver.findElement(By.cssSelector(".a-spacing-mini.a-spacing-top-base")).getText());
+		//Helper.wait(2000);
+		
+		//Assert.assertEquals("Your Amazon cart is empty.", driver.findElement(By.cssSelector(".a-spacing-mini.a-spacing-top-base")).getText());
+		Assert.assertEquals("Your Amazon cart is empty.", GetText.ByCssSelector(driver, ".a-spacing-mini.a-spacing-top-base"));
 	}
 	
 	/*@Test
