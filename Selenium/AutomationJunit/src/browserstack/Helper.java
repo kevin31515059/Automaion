@@ -2,9 +2,13 @@ package browserstack;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Helper {
 
+	static double sum=0;
+	static WebDriverWait wait;
 	public static void maximizeWindow(ChromeDriver driver){
 		
 		driver.manage().window().maximize();
@@ -68,5 +72,48 @@ public class Helper {
 		
 	}
 	
+	public static void GoToHomePage(ChromeDriver driver){
+		
+		Click.ByID(driver, "nav-logo");
+		
+	}
 	
+	public static double GetPrice(ChromeDriver driver){
+		wait = new WebDriverWait(driver,30);
+		double price = 0;
+		//System.out.println("In GetPrice");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("#corePrice_feature_div .a-offscreen")));
+		String text = driver.findElement(By.cssSelector("#corePrice_feature_div .a-offscreen")).getAttribute("innerText");
+		text = text.replaceAll("[$,]", "");
+		//Find.ByCssSelector(driver, "#corePrice_feature_div .a-section .a-text-price .a-offscreen");
+		price = Double.parseDouble(text);
+		//System.out.println("Price: "+price);
+		return price;
+
+	}
+	
+	public static double GetSubtotal(ChromeDriver driver){
+		double subtotal = 0;
+		//System.out.println("In GetSubtotal");
+		String text = driver.findElement(By.cssSelector("#sc-subtotal-amount-buybox .sc-price")).getAttribute("innerText");
+		text = text.replaceAll("[$,]", "");
+
+		subtotal = Double.parseDouble(text);
+
+		return subtotal;
+
+	}
+	
+	public static double GetSum(double price){
+
+		sum = sum + price;
+		//System.out.println("Sum: "+sum);
+		return sum;
+	}
+	
+	public static void CurrentSum(){
+		
+		System.out.println("Current Sum: "+sum);
+		
+	}
 }

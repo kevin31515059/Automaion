@@ -16,8 +16,8 @@ public class GetText{
 	public static String ByCssSelector(ChromeDriver driver, String cssPath){
 		
 		Find.ByCssSelector(driver, cssPath);
-		return Find.element.getText();
-
+		//return Find.element.getText();
+		return Find.element.getAttribute("innerText");
 	}
 
 	public static String ByClass(ChromeDriver driver, String className){

@@ -28,6 +28,15 @@ public class Find {
 		//driver.findElement(By.cssSelector(cssPath)).click();
 		element = driver.findElement(By.cssSelector(cssPath));
 	}
+	
+	public static void ByCssSelector(ChromeDriver driver, String cssPath, int index){
+		
+		wait = new WebDriverWait(driver,30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssPath)));
+		//driver.findElement(By.cssSelector(cssPath)).click();
+		element = driver.findElements(By.cssSelector(cssPath)).get(index);
+	}
+	
 	public static void ByClass(ChromeDriver driver, String className){
 		
 		wait = new WebDriverWait(driver,30);

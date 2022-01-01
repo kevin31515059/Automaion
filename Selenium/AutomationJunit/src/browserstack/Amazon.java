@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Assert;
 import org.junit.Before;
+
+import java.util.ArrayList;
 import java.util.List;
 
 //import graphql.Assert;
@@ -29,7 +31,7 @@ public class Amazon {
 		System.setProperty("webdriver.chrome.driver", ".\\ChromeDriver\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("https://www.amazon.ca/");
-
+		driver.manage().window().maximize();
 	}
 	
 	
@@ -116,11 +118,12 @@ public class Amazon {
 	}*/
 
 	
-	@Test
+	/*@Test
 	public void AddandRemoveItem(){
+		String searchItem = "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red";
 		driver.manage().window().maximize();
-		Helper.searchItem(driver, "Chair");
-		Helper.viewListItem(driver, "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red");
+		Helper.searchItem(driver, searchItem);
+		Helper.viewListItem(driver, searchItem);
 		Helper.addToCart(driver);
 
 		Click.ByID(driver, "attach-close_sideSheet-link");
@@ -132,7 +135,7 @@ public class Amazon {
 		
 		//Assert.assertEquals("Your Amazon cart is empty.", driver.findElement(By.cssSelector(".a-spacing-mini.a-spacing-top-base")).getText());
 		Assert.assertEquals("Your Amazon cart is empty.", GetText.ByCssSelector(driver, ".a-spacing-mini.a-spacing-top-base"));
-	}
+	}*/
 	
 	/*@Test
 	public void viewCart(){
@@ -142,6 +145,40 @@ public class Amazon {
 		
 	}*/
 	
+	
+	@Test
+	public void validateSum(){
+		String item1 = "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red";
+		String item2 = "Farini Electric Standing Desk Dual Motor Height Adjustable Computer Desk Home Office Stand Up Desk L47.2 x W23.6 White";
+		String sum;
+		WebElement element;
+		//double[] sum;
+		//ArrayList<Double> sumList = new ArrayList<>();
+		Helper.searchItem(driver, item1);
+		Helper.viewListItem(driver, item1);
+		//sumList.add(Helper.GetPrice(driver));
+		Helper.GetSum(Helper.GetPrice(driver));
+		//Helper.GetPrice(driver);
+		//sum=driver.findElement(By.cssSelector("#corePrice_feature_div .a-offscreen")).getAttribute("innerText");
+		//sum=element.getText();
+		//sum=GetText.ByCssSelector(driver, "#corePrice_feature_div .a-offscreen");
+		
+		//System.out.println("Sum: "+sum);
+		Helper.addToCart(driver);
+
+		Click.ByID(driver, "attach-close_sideSheet-link");
+
+		Helper.GoToHomePage(driver);
+		Helper.searchItem(driver, item2);
+		Helper.viewListItem(driver, item2);
+		Helper.GetSum(Helper.GetPrice(driver));
+		Helper.addToCart(driver);
+		Helper.CurrentSum();
+		
+		Helper.viewCart(driver);
+		//Assert.assertEquals(Helper.sum, Helper.GetSubtotal(driver));
+		Assert.assertEquals(Helper.sum, Helper.GetSubtotal(driver), 0);
+	}
 	
 	@After
 	public void closeDriver(){
