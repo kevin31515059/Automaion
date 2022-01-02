@@ -31,26 +31,19 @@ public class Amazon {
 		System.setProperty("webdriver.chrome.driver", ".\\ChromeDriver\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.get("https://www.amazon.ca/");
-		driver.manage().window().maximize();
+		Helper.maximizeWindow(driver);
 	}
 	
 	
-/*	@Test
+	/*@Test
 	public void logIn() throws InterruptedException{
-		ReadFile readfile = new ReadFile(); 
-		String login_email = readfile.readUserName();
-		String login_password = readfile.readPassword();
 		
 		final String expectedLogInMessage = "Hello, KevinAutomation";
+		String logInName =null;
 		
-		driver.findElement(By.id("nav-link-accountList-nav-line-1")).click();
-		driver.findElement(By.id("ap_email")).sendKeys(login_email);
-		driver.findElement(By.id("continue")).click();
+		Helper.logIn(driver);
 		
-		driver.findElement(By.id("ap_password")).sendKeys(login_password);
-		driver.findElement(By.id("signInSubmit")).click();
-		
-		String logInName = driver.findElement(By.id("nav-link-accountList-nav-line-1")).getText();
+		logInName = driver.findElement(By.id("nav-link-accountList-nav-line-1")).getText();
 		
 
 		Assert.assertEquals(expectedLogInMessage, logInName);
@@ -146,7 +139,7 @@ public class Amazon {
 	}*/
 	
 	
-	@Test
+	/*@Test
 	public void validateSum(){
 		String item1 = "AmazonBasics Low-Back Computer Task Office Desk Chair with Swivel Casters - Red";
 		String item2 = "Farini Electric Standing Desk Dual Motor Height Adjustable Computer Desk Home Office Stand Up Desk L47.2 x W23.6 White";
@@ -178,12 +171,68 @@ public class Amazon {
 		Helper.viewCart(driver);
 		//Assert.assertEquals(Helper.sum, Helper.GetSubtotal(driver));
 		Assert.assertEquals(Helper.sum, Helper.GetSubtotal(driver), 0);
+	}*/
+	
+	
+	/*@Test
+	public void selectYourAddes_ValidAddress(){
+		String postalCode = null;
+		Click.ByID(driver, "glow-ingress-block");
+		
+		Find.ByID(driver, "GLUXZipUpdateInput_0");
+		Find.element.sendKeys("V3J");
+		Find.ByID(driver, "GLUXZipUpdateInput_1");
+		Find.element.sendKeys("7Y4");
+		Click.ByID(driver, "GLUXZipUpdate");
+		Helper.wait(2000);
+		postalCode = GetText.ByCssSelector(driver, "#glow-ingress-line2");
+		//System.out.println(postalCode);
+		Assert.assertTrue(postalCode.contains("V3J"));
+		
+	}*/
+	
+	@Test
+	public void selectYourAddess_InValidAddress(){
+		String errorMSG = null;
+		Click.ByID(driver, "glow-ingress-block");
+		
+		Find.ByID(driver, "GLUXZipUpdateInput_0");
+		Find.element.sendKeys("123");
+		Find.ByID(driver, "GLUXZipUpdateInput_1");
+		Find.element.sendKeys("ABC");
+		Click.ByID(driver, "GLUXZipUpdate");
+		Helper.wait(2000);
+		errorMSG = GetText.ByCssSelector(driver, "#GLUXZipError");
+		//System.out.println(errorMSG);
+
+		Assert.assertEquals("Please enter a valid Canada postal code", errorMSG);
+	}
+	
+	
+	@Test
+	public void selectYourAddess_LogIn_IncalidAddress(){
+		String errorMSG = null;
+		
+		Helper.logIn(driver);
+		
+		Click.ByID(driver, "glow-ingress-block");
+		
+		Find.ByID(driver, "GLUXZipUpdateInput_0");
+		Find.element.sendKeys("123");
+		Find.ByID(driver, "GLUXZipUpdateInput_1");
+		Find.element.sendKeys("ABC");
+		Click.ByID(driver, "GLUXZipUpdate");
+		Helper.wait(2000);
+		errorMSG = GetText.ByCssSelector(driver, "#GLUXZipError");
+		//System.out.println(errorMSG);
+
+		Assert.assertEquals("Please enter a valid Canada postal code", errorMSG);
 	}
 	
 	@After
 	public void closeDriver(){
 		
-		//driver.close();
+		driver.close();
 		
 	}
 }

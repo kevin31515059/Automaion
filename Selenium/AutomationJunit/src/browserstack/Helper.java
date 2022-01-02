@@ -9,12 +9,27 @@ public class Helper {
 
 	static double sum=0;
 	static WebDriverWait wait;
+	
 	public static void maximizeWindow(ChromeDriver driver){
 		
 		driver.manage().window().maximize();
 		
 	}
 	
+	public static void logIn(ChromeDriver driver){
+		
+		ReadFile readfile = new ReadFile(); 
+		String login_email = readfile.readUserName();
+		String login_password = readfile.readPassword();
+		
+		driver.findElement(By.id("nav-link-accountList-nav-line-1")).click();
+		driver.findElement(By.id("ap_email")).sendKeys(login_email);
+		driver.findElement(By.id("continue")).click();
+		
+		driver.findElement(By.id("ap_password")).sendKeys(login_password);
+		driver.findElement(By.id("signInSubmit")).click();
+		
+	}
 	public static void searchItem(ChromeDriver driver, String itemName){
 		
 		//driver.findElement(By.id("twotabsearchtextbox")).sendKeys(itemName);
