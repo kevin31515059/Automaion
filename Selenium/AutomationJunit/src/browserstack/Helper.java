@@ -131,4 +131,13 @@ public class Helper {
 		System.out.println("Current Sum: "+sum);
 		
 	}
+	
+	public static double StringToPrice(ChromeDriver driver, String priceText){
+		double price = 0;
+		
+		priceText = priceText.replaceAll("[$,]", "");
+		price = Double.parseDouble(priceText);
+		
+		return price;
+	}
 }
