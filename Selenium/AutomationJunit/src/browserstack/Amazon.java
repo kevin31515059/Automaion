@@ -191,7 +191,7 @@ public class Amazon {
 		
 	}*/
 	
-	@Test
+	/*@Test
 	public void selectYourAddess_InValidAddress(){
 		String errorMSG = null;
 		Click.ByID(driver, "glow-ingress-block");
@@ -227,6 +227,60 @@ public class Amazon {
 		//System.out.println(errorMSG);
 
 		Assert.assertEquals("Please enter a valid Canada postal code", errorMSG);
+	}*/
+	
+	//Somehow Amazon return 26.99 goggle when "Under $25" is selected
+	
+	@Test
+	public void findGoggleLessThan25Dollars(){
+		String priceText;
+		boolean priceGreaterThanFilter;
+		Helper.searchItem(driver, "goggle ski");
+		Click.ByLinkText(driver, "Under $25");
+		List<WebElement> priceElement = driver.findElements(By.xpath("//span[@class='a-price']/span[@class='a-offscreen']"));
+		for (int i = 0; i< priceElement.size(); i++){
+			//System.out.println("Size: "+priceElement.size());
+			priceText = priceElement.get(i).getAttribute("innerText");
+			//System.out.println("Text: "+priceText);
+			//System.out.println("Converter: "+Helper.StringToPrice(driver, priceElement.get(i).getAttribute("innerText")));
+			if(Helper.StringToPrice(driver, priceElement.get(i).getAttribute("innerText")) <25){
+				
+				continue;
+				
+			}else{
+				
+				Assert.assertTrue(false);
+				
+			}
+			Assert.assertTrue(true);
+			
+		}
+		
+	}
+	
+	@Test
+	public void findGoggleBetween25and50Dollars(){
+		String priceText;
+
+		Helper.searchItem(driver, "goggle ski");
+		Click.ByLinkText(driver, "$25 to $50");
+		List<WebElement> priceElement = driver.findElements(By.xpath("//span[@class='a-price']/span[@class='a-offscreen']"));
+		for (int i = 0; i< priceElement.size(); i++){
+
+			priceText = priceElement.get(i).getAttribute("innerText");
+			if((Helper.StringToPrice(driver, priceElement.get(i).getAttribute("innerText")) >25) && (Helper.StringToPrice(driver, priceElement.get(i).getAttribute("innerText")) <50) ){
+				
+				continue;
+				
+			}else{
+				
+				Assert.assertTrue(false);
+				
+			}
+			Assert.assertTrue(true);
+			
+		}
+		
 	}
 	
 	@After
